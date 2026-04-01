@@ -2,34 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SEB Digital Business Card</title>
     <style>
 
+        :root {
+            --phone-width: 100vw;
+            --phone-height: 100vh;
+            --phone-radius: 32px;
+        }
 
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
+            min-width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #121212; 
-            overflow: hidden;
+            background-color: #121212;
+            overflow: auto;
             font-family: 'Segoe UI', sans-serif;
         }
 
+        /* 1. The Phone Frame */
+        .phone-container {
+            width: min(var(--phone-width), 400px);
+            height: min(var(--phone-height), 800px);
+            border: 8px solid #2a2a2a;
+            border-radius: var(--phone-radius);
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
 
+        /* Camera Notch */
+        .phone-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #2a2a2a;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+        }
 
         /* 2. The Panning Background */
         .background-image {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 150%;
             object-fit: cover;
-            z-index: 0;
+            z-index: 1;
             animation: panBackground 15s linear infinite alternate;
+            pointer-events: none;
+            user-select: none;
         }
 
         @keyframes panBackground {
@@ -41,20 +77,17 @@
         .screen-content {
             position: relative;
             z-index: 2;
-            min-height: 60vh;
-            min-width: 320px;
-            max-width: 400px;
-            margin: 40px auto;
+            min-height: 100%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 32px 30px 60px 30px;
-            background: rgba(0, 0, 0, 0.7);
+            padding: 24px 16px 60px 16px;
+            background: rgba(0, 0, 0, 0.6);
             box-sizing: border-box;
             text-align: center;
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            overflow-y: auto;
         }
 
         /* 4. UI Elements */
@@ -118,30 +151,46 @@
 
         .footer {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
             font-size: 10px;
             color: rgba(255, 255, 255, 0.4);
             letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 500px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+                border-width: 0;
+                box-shadow: none;
+            }
+            .screen-content {
+                padding: 16px 4vw 60px 4vw;
+            }
         }
     </style>
 </head>
 <body>
 
-
-    <img src="Example_Background.png.png" class="background-image" alt="Background">
-    <div class="screen-content">
-        <img src="SEB_logo.pfp.png" class="logo" alt="Sarawak Energy Logo">
-        <img src="Example_pfp.jpg" class="profile-pic" alt="Profile">
-        <h1>Abang Daanish Bin Abg Marani</h1>
-        <p class="title">Corporate Business Support<br>Intern CoE</p>
-        <div class="button-group">
-            <a href="tel:0128496927" class="btn">Phone</a>
-            <a href="mailto:AbgDaanish.AbgMarani@sarawakenergy.com.my" class="btn">Email</a>
-            <a href="https://www.linkedin.com/in/abang-daanish-80973a349/" target="_blank" class="btn">LinkedIn</a>
-            <a href="https://maps.google.com/?q=Sarawak+Energy+Berhad+Kuching" target="_blank" class="btn">Location</a>
-        </div>
-        <div class="footer">
-            © 2026 SARAWAK ENERGY. ALL RIGHTS RESERVED.
+    <div class="phone-container">
+        <img src="Assets/Example_Background.png.png" class="background-image" alt="Background">
+        <div class="screen-content">
+            <img src="Assets/SEB_logo.pfp.png" class="logo" alt="Sarawak Energy Logo">
+            <img src="Assets/Example_pfp.jpg" class="profile-pic" alt="Profile">
+            <h1>Abang Daanish Bin Abg Marani</h1>
+            <p class="title">Corporate Business Support<br>Intern CoE</p>
+            <div class="button-group">
+                <a href="tel:0128496927" class="btn">Phone</a>
+                <a href="mailto:AbgDaanish.AbgMarani@sarawakenergy.com.my" class="btn">Email</a>
+                <a href="https://www.linkedin.com/in/abang-daanish-80973a349/" target="_blank" class="btn">LinkedIn</a>
+                <a href="https://maps.google.com/?q=Sarawak+Energy+Berhad+Kuching" target="_blank" class="btn">Location</a>
+            </div>
+            <div class="footer">
+                © 2026 SARAWAK ENERGY. ALL RIGHTS RESERVED.
+            </div>
         </div>
     </div>
 
